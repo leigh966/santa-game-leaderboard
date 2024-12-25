@@ -7,3 +7,11 @@ class TimedLeaderboard(db.Model):
     name: Mapped[str] = mapped_column(String, nullable=False)
     score: Mapped[int] = mapped_column(Integer, nullable=False)
     checksum: Mapped[str] = mapped_column(String, nullable=False)
+
+
+class EveryHouseLeaderboard(db.Model):
+    id: Mapped[int] = mapped_column(Integer, primary_key=True)
+    name: Mapped[str] = mapped_column(String, nullable=False)
+    score: Mapped[int] = mapped_column(Integer, nullable=False)
+    time: Mapped[str] = mapped_column(String, nullable=False)
+    checksum: Mapped[str] = mapped_column(String, nullable=False)
