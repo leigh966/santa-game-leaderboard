@@ -2,6 +2,7 @@ from flask import Flask, request, jsonify
 from db import db
 import os
 from models import *
+from flask_cors import CORS, cross_origin
 
 # create the app
 app = Flask(__name__)
@@ -9,6 +10,10 @@ app = Flask(__name__)
 database_url = os.environ.get("DATABASE_URI")
 app.config["SQLALCHEMY_DATABASE_URI"] = database_url
 
+
+#cors
+cors = CORS(app)
+app.config['CORS_HEADERS'] = 'Content-Type'
 
 # initialize the app with the sqlalchemy extension
 db.init_app(app)
@@ -27,6 +32,7 @@ def is_every_house_checksum_good(name, score, time, check):
 
 
 @app.route("/timed", methods = ["POST"])
+@cross_origin()
 def post_timed():
     name = request.form.get("name")
     score = request.form.get("score")
@@ -42,6 +48,7 @@ def post_timed():
     return "Failed to authenticate", 401
 
 @app.route("/timed", methods = ["GET"])
+@cross_origin()
 def get_timed():
     leaderboard_records = db.session.query(TimedLeaderboard).order_by(TimedLeaderboard.score.desc())
     output = []
